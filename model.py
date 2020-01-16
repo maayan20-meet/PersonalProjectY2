@@ -13,3 +13,18 @@ class User(Base):
 
 	name = Column(String)
 	password = Column(String)
+
+class Canvas(Base):
+	__tablename__ = 'canvases'
+
+	canvas_id = Column(Integer, primary_key=True)
+	name = Column(String)
+	user_id = Column(Integer)
+
+
+class CanvasHistory(Base):
+	__tablename__ = 'history'
+	canvas_history_id = Column(Integer, primary_key=True)
+	canvas = Column(Integer)
+	history_point = Column(Integer)
+	data = Column(String)

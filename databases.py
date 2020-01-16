@@ -1,4 +1,4 @@
-from model import Base, User
+from model import Base, User, Canvas, CanvasHistory
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 
@@ -36,3 +36,46 @@ def user_exist(name):
 	user = session.query(User).filter_by(name=name).first()
 
 	return user is not None
+
+#Canvas functions:
+
+def new_canvas(name, user_id):
+
+	session = create_thread()
+
+	canvas = Canvas(name = name, user_id = user_id)
+
+	session.add(canvas)
+	session.commit()
+
+
+def new_history_point(data, canvas_id):
+
+	lateset_point = get_lateset_point()
+
+	point = CanvasHistory(canvas=canvas_id, history_point=lateset_point.history_point + 1, data=data)
+
+	session.add(canvas)
+	session.commit()
+
+
+def get_lateset_point(canvas_id):
+
+	session = create_thread()
+
+	points = session.query(CanvasHistory).filter_by(canvas_id=canvas_id).all()
+
+	max_point = points[0]
+
+	for point in points:
+
+		if point.history_point > max_point.history_point:
+			max_point = point
+
+	return max_point
+
+def get_canvas(canvas_id):
+
+	session = create_thread()
+
+	return session.query(Canvas).filter_by(canvas_id=canvas_id).first()

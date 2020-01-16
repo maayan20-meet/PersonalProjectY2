@@ -61,5 +61,16 @@ def log_out():
 
 	return home()
 
+@app.route('/canvas', methods=['POST'])
+def canvas():
+
+	return render_template('canvas.html', data=get_lateset_point(request.form('canvas_id')).data)
+
+@app.route('/save_draw', methods=['POST'])
+def save_draw():
+
+	new_history_point(request.form['picData'], request.form['canvasID'])
+	return
+
 if __name__ == '__main__':
     app.run(debug=True)
