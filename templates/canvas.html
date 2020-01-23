@@ -79,14 +79,15 @@
             }
         }
         
-        function save() {
-            return canvas.toDataURL();
+        function save(canvasID) {
+            var button = document.getElementById("btn");
+            button.value = canvas.toDataURL();
         }
         
         function findxy(res, e) {
             if (res == 'down') {
                 prevX = currX;
-                prevY = currY;
+                prevY  = currY;
                 currX = e.clientX - canvas.offsetLeft;
                 currY = e.clientY - canvas.offsetTop;
         
@@ -139,8 +140,8 @@
         <div style="position:absolute;top:20%;left:43%;">Eraser</div>
         <div style="position:absolute;top:22%;left:45%;width:15px;height:15px;background:white;border:2px solid;" id="white" onclick="color(this)"></div>
         <img id="canvasimg" style="position:absolute;top:10%;left:52%;" style="display:none;">
-        <form action="{{url_for('save_draw', picData='save()', canvasID=canvasID)}}" method="POST">
-            <input type="button" value="save" id="btn" size="30" style="position:absolute;top:55%;left:10%;">
+        <form action="/save_draw" method="POST" id="save_form">
+            <input type="button" onclick="save()" value="TBD" id="btn" size="30" style="position:absolute;top:55%;left:10%;">
         </form>
         <input type="button" value="clear" id="clr" size="23" onclick="erase()" style="position:absolute;top:55%;left:15%;">
     </body>

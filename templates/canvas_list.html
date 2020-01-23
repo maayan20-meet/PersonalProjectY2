@@ -5,8 +5,14 @@
 </head>
 <body>
 
+	<h1>Canvas list</h1>
+
 	{% for canvas in canvases %}
 
-	
+	<a href="/canvas?c={{canvas.canvas_id}}">{{canvas.name}}</a>
+	<br>
+
+	{% endfor %}
+
 </body>
 </html>

@@ -51,11 +51,18 @@ def new_canvas(name, user_id):
 
 def new_history_point(data, canvas_id):
 
-	lateset_point = get_lateset_point()
+	session = create_thread()
 
-	point = CanvasHistory(canvas=canvas_id, history_point=lateset_point.history_point + 1, data=data)
+	lateset_point = get_lateset_point(canvas_id)
 
-	session.add(canvas)
+	history_point = 0
+
+	if lateset_point is not None:
+		history_point = lateset_point.history_point + 1
+
+	point = CanvasHistory(canvas_id=canvas_id, history_point=history_point, data=data)
+
+	session.add(point)
 	session.commit()
 
 
@@ -64,6 +71,9 @@ def get_lateset_point(canvas_id):
 	session = create_thread()
 
 	points = session.query(CanvasHistory).filter_by(canvas_id=canvas_id).all()
+
+	if not points:
+		return None
 
 	max_point = points[0]
 
@@ -85,3 +95,13 @@ def get_all_canvases():
 	session = create_thread()
 
 	return session.query(Canvas).all()
+
+def create_canvas(canvas_name, user_id):
+
+	session = create_thread()
+
+	canvas = Canvas(name=canvas_name, user_id=user_id)
+	session.add(canvas)
+	session.commit()
+
+	return canvas

@@ -25,6 +25,6 @@ class Canvas(Base):
 class CanvasHistory(Base):
 	__tablename__ = 'history'
 	canvas_history_id = Column(Integer, primary_key=True)
-	canvas = Column(Integer)
+	canvas_id = Column(Integer)
 	history_point = Column(Integer)
 	data = Column(String)
