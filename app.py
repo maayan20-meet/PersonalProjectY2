@@ -9,9 +9,13 @@ app.config['SECRET_KEY'] = app.secret_key
 @app.route('/')
 def home():
 
-	if login_session['logged_in']:
-		print('aaaa')
-		return render_template('home.html', name=login_session['name'])
+	try:
+		if login_session['logged_in']:
+			print('aaaa')
+			return render_template('home.html', name=login_session['name'])
+
+	except KeyError as e:
+		pass
 
 	return render_template('home.html')
 
@@ -60,6 +64,11 @@ def log_out():
 	login_session['name'] = None
 
 	return home()
+
+@app.route('/canvas_list')
+def canvas_list():
+
+	return render_template('canvas_list.html', canvases=get_all_canvases())
 
 @app.route('/canvas', methods=['POST'])
 def canvas():

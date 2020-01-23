@@ -79,3 +79,9 @@ def get_canvas(canvas_id):
 	session = create_thread()
 
 	return session.query(Canvas).filter_by(canvas_id=canvas_id).first()
+
+def get_all_canvases():
+
+	session = create_thread()
+
+	return session.query(Canvas).all()
