@@ -51,7 +51,7 @@ def logged_in():
 	if not user_exist(request.form['username']):
 		return render_template('home.html', error=True)
 
-	elif request.form['password'] != get_pass(request.form['username']):
+	elif request.form['password'] != get_pass(request.form['name']):
 		return render_template('home.html', error=True)
 
 	login_session['logged_in'] = True
@@ -90,7 +90,7 @@ def new_canvas():
 @app.route('/add_canvas', methods=['POST'])
 def add_canvas():
 
-	canvas_id = create_canvas(request.form['canvas_name'], request.form['username']).canvas_id
+	canvas_id = create_canvas(request.form['canvas_name'], login_session['name']).canvas_id
 	new_history_point(blank_canvas_url, canvas_id)
 
 	return render_template('canvas.html', data=blank_canvas_url)
